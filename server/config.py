@@ -1,4 +1,5 @@
 import os
+import uuid
 
 UPLOAD_DIR_ENV = 'UPLOAD_DIR'
 OUTPUT_DIR_ENV = 'OUTPUT_DIR'
@@ -12,13 +13,13 @@ def ensure_dirs():
 
 
 def ensure_dir(env_name: str):
-    dir = os.getenv(env_name)
-    if not dir:
-        dir = env_name
-        os.environ[env_name] = dir
+    directory = os.getenv(env_name)
+    if not directory:
+        directory = env_name
+        os.environ[env_name] = directory
 
-    if not os.path.exists(dir):
-        os.makedirs(dir)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 
 def get_upload_dir_path() -> str:
@@ -29,5 +30,20 @@ def get_output_dir_path() -> str:
     return os.path.abspath(os.getenv(OUTPUT_DIR_ENV))
 
 
+def get_project_output_file_path(project_id: uuid):
+    file_name = f'{project_id}.mp4'
+    return os.path.join(get_output_dir_path(), file_name)
+
+
+def get_project_status_file_path(project_id: uuid):
+    file_name = f'{project_id}.txt'
+    return os.path.join(get_output_dir_path(), file_name)
+
+
 def get_temp_dir_path() -> str:
     return os.path.abspath(os.getenv(TMP_DIR_ENV))
+
+
+def get_project_temp_dir_path(project_id: uuid) -> str:
+    print("proj tmp dir path", project_id)
+    return os.path.join(get_temp_dir_path(), str(project_id))

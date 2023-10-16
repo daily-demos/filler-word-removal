@@ -1,7 +1,7 @@
 import os
 
 from deepgram import Deepgram
-import timestamp
+from . import timestamp
 
 DEEPGRAM_TRANSCRIPTION_OPTIONS = {
     "model": "general",

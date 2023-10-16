@@ -2,7 +2,7 @@ from enum import Enum
 
 import whisper_timestamped
 
-import timestamp
+from . import timestamp
 
 
 class Models(Enum):
