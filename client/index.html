@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Daily chat + reaction recording with VCS</title>
+    <title>Daily filler word removal</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./css/style.css" rel="stylesheet" type="text/css" />
@@ -17,7 +17,7 @@
                     alt="Daily logo reads Daily"
             />
             <strong>
-                <p class="header-title">Daily chat + reaction recording with VCS</p>
+                <p class="header-title">Daily filler word removal</p>
             </strong>
         </div>
         <div class="right-header">
@@ -57,24 +57,40 @@
 <div id="container">
     <div id="lobby" class="lobby">
         <h1>Filler word removal demo</h1>
-        <p>Upload an MP4 file to remove filler words like "um" and "uh".</p>
-        <p>This demo implements filler word removal functionality with a local Whisper model or, alternatively, Deepgram's <em>Nova</em>-tier model.</p>
-        <p>You can check out the model-specific implementations in <code>server/transcription</code>.</p>
-        <p>Start by selecting an MP4 file below and clicking "Upload".</p>
-        <form id="uploadForm">
-            <h2>Upload your MP4 file</h2>
-            <input type="file" id="videoFile" class="light-btn" required>
-            <button type="submit" id="upload" class="light-btn">Upload</button>
-        </form>
-    </div>
-    <div id="projects" class="projects hidden">
-        <table id="projectsTable">
-            <th>Name</th>
-            <th>Project ID</th>
-            <th>Status</th>
-            <th>Details</th>
-            <th>Download</th>
-        </table>
+        <p>Remove filler words like "um" and "uh" from any MP4 file.</p>
+        <p>This demo implements filler word removal functionality with a local Whisper model or, alternatively,
+            Deepgram's <em>Nova</em>-tier model.</p>
+
+        <div id="manual">
+            <h2>Manual file upload</h2>
+            <p>You can check out the model-specific implementations in <code>server/transcription</code>.</p>
+            <p>Start by selecting an MP4 file below and clicking "Upload".</p>
+            <form id="uploadForm">
+                <h4>Upload your MP4 file</h4>
+                <input type="file" id="videoFile" class="light-btn" required>
+                <button type="submit" id="upload" class="teal-btn">Upload</button>
+            </form>
+            <table id="projectsTable" class="hidden">
+                <th>Name</th>
+                <th>Project ID</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th>Download</th>
+            </table>
+        </div>
+        <div id="recordings">
+            <h2>Fetch Daily recordings automatically</h2>
+            <p>If you've configured a Daily API key on your server component, you can automatically fetch Daily recordings
+            for your domain and process them without uploading a file manually.</p>
+            <button id="fetchRecordings" class="teal-btn">Fetch Daily recordings</button>
+            <table id="dailyRecordings" class="hidden">
+                <th>Timestamp</th>
+                <th>Room name</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th></th>
+            </table>
+        </div>
     </div>
 </div>
 <script type="module" src="./index.js"></script>

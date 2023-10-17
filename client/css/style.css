@@ -63,14 +63,6 @@ form {
     align-items: center;
 }
 
-input:not([type='file']),textarea,input::file-selector-button {
-    padding: 7px;
-    border-color: var(--teal-dark);
-    border-radius: 8px;
-    font-size: 1.2em;
-    margin-bottom: 8px;
-}
-
 form button {
     font-size: 1.2em;
     width: 100px;
@@ -108,7 +100,7 @@ form button {
     cursor: pointer;
 }
 
-.teal-btn:not([type='file']) {
+.teal-btn:not([type='file']),.teal-btn::file-selector-button {
     background-color: var(--teal);
     border-color: var(--dark);
     border-radius: 28px;
@@ -118,7 +110,7 @@ form button {
     padding: 8px;
 }
 
-.teal-btn:not([type='file']):hover:enabled {
+.teal-btn:not([type='file']):hover:enabled,.teal-btn::file-selector-button:hover {
     background-color: var(--light);
     cursor: pointer;
 }
