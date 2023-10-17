@@ -12,6 +12,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "ignorePatterns": ["venv"],
   "rules": {
     "prettier/prettier": ["error", { "singleQuote": true }],
     "no-continue": "off",

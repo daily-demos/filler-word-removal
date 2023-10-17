@@ -12,11 +12,9 @@ def fetch_recordings():
     if not daily_api_key:
         raise Exception("Daily API key not configured in server environment")
 
-    print("api key:", daily_api_key)
     headers = {'Authorization': f'Bearer {daily_api_key}'}
     url = f'{DAILY_API_URL}/recordings'
 
-    print("headers:", headers, url)
     res = requests.get(url, headers=headers)
     if not res.ok:
         raise Exception(f'Failed to fetch recordings; return code {res.status_code}; {res.text}')
@@ -38,14 +36,12 @@ def fetch_recordings():
 
 
 def get_access_link(recording_id):
-    print("get acces link recording ID:", recording_id)
     daily_api_key = os.getenv("DAILY_API_KEY")
     if not daily_api_key:
         raise Exception("Daily API key not configured in server environment")
 
     url = f'{DAILY_API_URL}/recordings/{recording_id}/access-link'
     headers = {'Authorization': f'Bearer {daily_api_key}'}
-    print("url:", url)
 
     res = requests.get(url, headers=headers)
     if not res.ok:
