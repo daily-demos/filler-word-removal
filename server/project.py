@@ -48,9 +48,9 @@ class Project:
         return id
 
     def process(self, source_video_path: str):
-        print("LIZA PROCESSS STARTRD")
         self.update_status(Status.InProgress, '')
         try:
+            self.update_status(Status.InProgress, 'Extracting audio')
             audio_file_path = self.extract_audio(source_video_path)
         except Exception as e:
             traceback.print_exc()
@@ -60,6 +60,7 @@ class Project:
 
 
         try:
+            self.update_status(Status.InProgress, 'Transcribing audio')
             result = self.transcribe(audio_file_path)
         except Exception as e:
             traceback.print_exc()
@@ -68,6 +69,7 @@ class Project:
             return
 
         try:
+            self.update_status(Status.InProgress, 'Splitting video file')
             split_times = self.get_splits(result)
         except Exception as e:
             traceback.print_exc()
@@ -76,6 +78,7 @@ class Project:
             return
 
         try:
+            self.update_status(Status.InProgress, 'Reconstituting video file')
             self.resplice(source_video_path, split_times)
         except Exception as e:
             traceback.print_exc()
@@ -83,7 +86,7 @@ class Project:
             self.update_status(Status.Failed, 'failed to resplice video')
             return
 
-        self.update_status(Status.Done, 'output file ready for download')
+        self.update_status(Status.Done, 'Output file ready for download')
 
     def extract_audio(self, video_path: str):
         video = VideoFileClip(video_path)

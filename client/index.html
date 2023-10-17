@@ -1,14 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Daily filler word removal</title>
+    <title>Daily chat + reaction recording with VCS</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+    <link href="./css/header.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <form id="uploadForm">
-        <input type="file" id="videoFile" required>
-        <button type="submit" id="upload">Upload</button>
-    </form>
-
-    <script src="index.js"></script>
+<header>
+    <div class="header-container">
+        <div class="left-header">
+            <img
+                    src="./assets/daily.svg"
+                    class="daily-logo"
+                    alt="Daily logo reads Daily"
+            />
+            <strong>
+                <p class="header-title">Daily chat + reaction recording with VCS</p>
+            </strong>
+        </div>
+        <div class="right-header">
+            <a
+                    href="https://docs.daily.co/reference"
+                    target="_blank"
+                    class="link"
+            >
+                <button class="button docs-button white-button">
+                    API docs
+                    <img
+                            class="arrow-icon"
+                            src="./assets/new-tab-icon.png"
+                            alt="Arrow icon points up and to the right"
+                            aria-hidden="true"
+                    />
+                </button>
+            </a>
+            <span class="divider"></span>
+            <a
+                    href="http://github.com/daily-demos/vcs-chat-recording"
+                    target="_blank"
+            >
+                <img
+                        class="octocat"
+                        src="./assets/github.png"
+                        alt="GitHub logo Octocat"
+                />
+            </a>
+        </div>
+    </div>
+</header>
+<noscript>
+    This application requires JavaScript to run. Please enable JavaScript in
+    your browser.
+</noscript>
+<div id="container">
+    <div id="lobby" class="lobby">
+        <h1>Filler word removal demo</h1>
+        <p>Upload an MP4 file to remove filler words like "um" and "uh".</p>
+        <p>This demo implements filler word removal functionality with a local Whisper model or, alternatively, Deepgram's <em>Nova</em>-tier model.</p>
+        <p>You can check out the model-specific implementations in <code>server/transcription</code>.</p>
+        <p>Start by selecting an MP4 file below and clicking "Upload".</p>
+        <form id="uploadForm">
+            <h2>Upload your MP4 file</h2>
+            <input type="file" id="videoFile" class="light-btn" required>
+            <button type="submit" id="upload" class="light-btn">Upload</button>
+        </form>
+    </div>
+    <div id="projects" class="projects hidden">
+        <table id="projectsTable">
+            <th>Name</th>
+            <th>Project ID</th>
+            <th>Status</th>
+            <th>Details</th>
+            <th>Download</th>
+        </table>
+    </div>
+</div>
+<script type="module" src="./index.js"></script>
 </body>
 </html>

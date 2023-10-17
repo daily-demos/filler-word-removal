@@ -1,0 +1,166 @@
+/* End header styles */
+:root {
+    --orange: rgb(255,110,74);
+    --orange-dark: rgb(242,92,55);
+
+    --teal: rgb(27,235,185);
+    --teal-dark: rgb(12,226,176);
+
+    --blue: rgb(142, 219, 255);
+
+    --dark: rgb(22, 22, 24);
+    --dark-muted: rgb(86, 86, 92);
+
+    --light: rgb(255,255,255);
+    --light-muted: rgb(145, 145, 145);
+
+}
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#container {
+    margin-top: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#container a {
+    color: var(--orange-dark);
+    text-decoration: none;
+}
+
+#container a:hover:enabled {
+    text-decoration: underline;
+}
+
+.lobby {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 50%;
+}
+
+.lobby a {
+    color: var(--orange-dark);
+    text-decoration: none;
+}
+
+.lobby a:hover:enabled {
+    text-decoration: underline;
+}
+
+
+
+/* Form and button styling */
+
+form {
+    margin-bottom: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input:not([type='file']),textarea,input::file-selector-button {
+    padding: 7px;
+    border-color: var(--teal-dark);
+    border-radius: 8px;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+form button {
+    font-size: 1.2em;
+    width: 100px;
+}
+
+.dark-btn:not([type='file']) {
+    background-color: var(--dark);
+    border-color: var(--dark);
+    border-radius: 24px;
+    border-width: 1px;
+    color: var(--light);
+    transition: 0.5s;
+    padding: 8px;
+}
+
+.dark-btn:not([type='file']):hover:enabled {
+    background-color: var(--light);
+    color: var(--dark);
+    cursor: pointer;
+}
+
+.light-btn:not([type='file']),.light-btn::file-selector-button {
+    background-color: var(--light);
+    border-color: var(--dark);
+    border-radius: 28px;
+    border-width: 1px;
+    color: var(--dark);
+    transition: 0.5s;
+    padding: 8px;
+}
+
+.light-btn:not([type='file']):hover:enabled,.light-btn::file-selector-button:hover {
+    background-color: var(--dark);
+    color: var(--light);
+    cursor: pointer;
+}
+
+.teal-btn:not([type='file']) {
+    background-color: var(--teal);
+    border-color: var(--dark);
+    border-radius: 28px;
+    border-width: 1px;
+    color: var(--dark);
+    transition: 0.5s;
+    padding: 8px;
+}
+
+.teal-btn:not([type='file']):hover:enabled {
+    background-color: var(--light);
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: var(--dark-muted);
+    color: var(--light-muted);
+    border: 1px solid var(--dark-muted);
+}
+
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+table {
+    width: 100%;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+}
+
+.spinner {
+    border: 4px solid var(--light); 
+    border-top: 4px solid var(--teal);
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    animation: spin 1s linear infinite;
+    margin-left: 4px;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none;
+}

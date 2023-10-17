@@ -1,6 +1,7 @@
+import {addDownloadLink, addProject, updateProjectStatus} from "./dom.js";
+
 addEventListener("DOMContentLoaded", (event) => {
     setupUploadForm()
-
 });
 
 const apiURL = 'http://127.0.0.1:5000'
@@ -20,7 +21,9 @@ function setupUploadForm() {
             }
             return res.json()
         }).then((data) => {
-            poll_status(data['project_id'])
+            const projectID = data['project_id']
+            addProject(projectID, data['name'])
+            poll_status(projectID)
         }).catch((e) => {
             console.error("err:", e)
         })
@@ -38,16 +41,15 @@ function poll_status(projectID) {
             })
             .then((data) => {
                 const status = data['status']
+                const info = data['info']
                 console.log("project status:", status)
+                updateProjectStatus(projectID, status, info)
                 switch (status) {
                     case "In progress":
                         poll_status(projectID)
                         break;
                     case "Succeeded":
-                        downloadOutput();
-                        break;
-                    case "Failed":
-                        showError();
+                        addDownloadLink(projectID, `${apiURL}/projects/${projectID}/download`)
                         break;
                     default:
                         console.warn("unexpected status:", status);
@@ -59,12 +61,4 @@ function poll_status(projectID) {
                 poll_status(projectID)
             })
     }, 2000)
-}
-
-function downloadOutput() {
-
-}
-
-function showError() {
-
 }
