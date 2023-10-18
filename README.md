@@ -31,6 +31,7 @@ In the virtual environment, run the following:
 
 Now, open the localhost address shown in your terminal after the last step above. You should see the front-end of the demo allowing you to upload your MP4 file or fetch your Daily recordings:
 
+![Screenshot of filler word removal web app](screenshot.png)
 
 ## How it works
 

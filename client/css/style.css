@@ -35,6 +35,11 @@ body {
     text-decoration: underline;
 }
 
+#recordings {
+    display: flex;
+    flex-direction: column;
+}
+
 .lobby {
     display: flex;
     flex-direction: column;
@@ -108,6 +113,7 @@ form button {
     color: var(--dark);
     transition: 0.5s;
     padding: 8px;
+    font-size: 1.1em;
 }
 
 .teal-btn:not([type='file']):hover:enabled,.teal-btn::file-selector-button:hover {
