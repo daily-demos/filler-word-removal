@@ -1,5 +1,6 @@
 venv
 .env
+.idea
 /.git/
 /OUTPUT_DIR/
 /UPLOAD_DIR/
