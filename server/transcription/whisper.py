@@ -1,3 +1,5 @@
+"""This module implements Whisper transcription with a locally-downloaded model."""
+
 from enum import Enum
 
 import whisper_timestamped
@@ -6,6 +8,7 @@ from . import timestamp
 
 
 class Models(Enum):
+    """Class of basic Whisper model selection options"""
     TINY = "tiny"
     BASE = "base"
     MEDIUM = "medium"
@@ -13,17 +16,27 @@ class Models(Enum):
 
 
 def transcribe(audio_path: str):
+    """Transcribes given audio file using Whisper"""
     try:
         audio = whisper_timestamped.load_audio(audio_path)
         model = whisper_timestamped.load_model(Models.BASE.value, device="cpu")
-        transcription = whisper_timestamped.transcribe(model, audio, detect_disfluencies=True, language="en", vad=False,
-                                                       temperature=0, no_speech_threshold=1, min_word_duration=0)
+        transcription = whisper_timestamped.transcribe(
+            model,
+            audio,
+            detect_disfluencies=True,
+            language="en",
+            vad=False,
+            temperature=0,
+            no_speech_threshold=1,
+            min_word_duration=0
+        )
     except Exception as e:
-        raise Exception("failed to transcribe with Whisper", e)
+        raise Exception("failed to transcribe with Whisper") from e
     return transcription
 
 
 def get_splits(transcription) -> timestamp.Timestamps:
+    """Retrieves split points with detected filler words removed"""
     fillers = timestamp.Timestamps()
     segments = transcription["segments"]
     end_time = segments[-1]["end"]

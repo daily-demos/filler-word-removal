@@ -1,7 +1,7 @@
 import {
   addDailyRecording,
   addDownloadLink,
-  addProject,
+  addUploadedProject,
   updateProjectStatus,
 } from './dom.js';
 
@@ -12,6 +12,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 const apiURL = 'http://127.0.0.1:5000';
 
+/**
+ * Configures the manual file upload form
+ */
 function setupUploadForm() {
   const form = document.getElementById('uploadForm');
   form.onsubmit = (ev) => {
@@ -19,8 +22,10 @@ function setupUploadForm() {
 
     const video = document.getElementById('videoFile').files[0];
     const formData = new FormData();
-
     formData.append('file', video);
+
+    // Upload the selected file to the server. This will begin processing the file
+    // to remove filler words.
     fetch(`${apiURL}/upload`, { method: 'POST', body: formData })
       .then((res) => {
         if (res.ok === false) {
@@ -29,8 +34,11 @@ function setupUploadForm() {
         return res.json();
       })
       .then((data) => {
+        // Retrieve project ID from server response and begin polling status.
         const projectID = data.project_id;
-        addProject(projectID, data.name);
+
+        // Update the DOM to show the new project
+        addUploadedProject(projectID, data.name);
         pollStatus(projectID);
       })
       .catch((e) => {
@@ -39,9 +47,13 @@ function setupUploadForm() {
   };
 }
 
+/**
+ * Configures fetching Daily recordings
+ */
 function setupRecordingsFetchBtn() {
   const btn = document.getElementById('fetchRecordings');
   btn.onclick = () => {
+    // Fetch all recordings from the server
     fetch(`${apiURL}/recordings`, { method: 'GET' })
       .then((res) => {
         if (res.ok === false) {
@@ -50,6 +62,7 @@ function setupRecordingsFetchBtn() {
         return res.json();
       })
       .then((data) => {
+        // Add each fetched recording to the recordings table in the DOM
         const { recordings } = data;
         for (let i = 0; i < recordings.length; i += 1) {
           const rec = recordings[i];
@@ -67,7 +80,12 @@ function setupRecordingsFetchBtn() {
   };
 }
 
+/**
+ * Processes a specified Daily recording to remove filler words
+ * @param recordingID
+ */
 function processDailyRecording(recordingID) {
+  // Begin processing Daily recording to remove filler words
   fetch(`${apiURL}/process_recording/${recordingID}`, {
     method: 'POST',
   })
@@ -79,16 +97,22 @@ function processDailyRecording(recordingID) {
     })
     .then((data) => {
       const projectID = data.project_id;
-      addProject(projectID, data.name);
-      pollStatus(projectID);
+      // Begin polling status
+      pollStatus(projectID, true);
     })
     .catch((e) => {
       console.error('Failed to process Daily recording:', e);
     });
 }
 
-function pollStatus(projectID) {
+/**
+ * Check the status of a processing project
+ * @param projectID
+ * @param isRecording
+ */
+function pollStatus(projectID, isRecording = false) {
   setTimeout(() => {
+    // Fetch status of the given project from the server
     fetch(`${apiURL}/projects/${projectID}`)
       .then((res) => {
         if (!res.ok) {
@@ -99,7 +123,9 @@ function pollStatus(projectID) {
       .then((data) => {
         const { status } = data;
         const { info } = data;
-        updateProjectStatus(projectID, status, info);
+
+        // Update status in the DOM
+        updateProjectStatus(projectID, status, info, isRecording);
         switch (status) {
           case 'In progress':
             pollStatus(projectID);

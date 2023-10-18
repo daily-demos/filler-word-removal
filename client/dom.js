@@ -4,10 +4,15 @@ const projDownloadCellIdx = 4;
 
 const hiddenClassName = 'hidden';
 
-export function addProject(id, name) {
-  const projectsTable = getProjectsTable();
+/**
+ * Add a project to the Uploads table
+ * @param id
+ * @param name
+ */
+export function addUploadedProject(id, name) {
+  const uploadsTable = getUploadsTable();
 
-  const row = projectsTable.insertRow(-1);
+  const row = uploadsTable.insertRow(-1);
   row.id = id;
 
   const nameCell = row.insertCell(-1);
@@ -25,9 +30,16 @@ export function addProject(id, name) {
   const dlCell = row.insertCell(-1);
   dlCell.append(createSpinner());
 
-  projectsTable.classList.remove(hiddenClassName);
+  uploadsTable.classList.remove(hiddenClassName);
 }
 
+/**
+ * Add a recording to the Recordings table
+ * @param id
+ * @param roomName
+ * @param timestamp
+ * @param processFunc
+ */
 export function addDailyRecording(id, roomName, timestamp, processFunc) {
   const recordingTable = getRecordingsTable();
 
@@ -62,6 +74,13 @@ export function addDailyRecording(id, roomName, timestamp, processFunc) {
   recordingTable.classList.remove(hiddenClassName);
 }
 
+/**
+ * Update the status of a recording, whether it is in the Uploads or the Recordings table
+ * @param id
+ * @param status
+ * @param info
+ * @param isDailyRecording
+ */
 export function updateProjectStatus(
   id,
   status,
@@ -88,26 +107,36 @@ export function addDownloadLink(id, link) {
   dlCell.append(a);
 }
 
-function getProjectsTable() {
+function getUploadsTable() {
   return document.getElementById('projectsTable');
-}
-
-function getProjectRow(id, isDailyRecording) {
-  const ele = document.getElementById(id);
-  const rowIdx = ele.rowIndex;
-  let table;
-  if (!isDailyRecording) {
-    table = getRecordingsTable();
-  } else {
-    table = getRecordingsTable();
-  }
-  return table.rows[rowIdx];
 }
 
 function getRecordingsTable() {
   return document.getElementById('dailyRecordings');
 }
 
+/**
+ * Retrieve project row from either Uploads or Recordings table
+ * @param id
+ * @param isDailyRecording
+ * @returns {HTMLTableRowElement}
+ */
+function getProjectRow(id, isDailyRecording) {
+  const ele = document.getElementById(id);
+  const rowIdx = ele.rowIndex;
+  let table;
+  if (!isDailyRecording) {
+    table = getUploadsTable();
+  } else {
+    table = getRecordingsTable();
+  }
+  return table.rows[rowIdx];
+}
+
+/**
+ * Create a spinner element to show processing in progress.
+ * @returns {HTMLDivElement}
+ */
 function createSpinner() {
   const ele = document.createElement('div');
   ele.className = 'spinner';

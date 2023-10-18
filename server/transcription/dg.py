@@ -1,3 +1,5 @@
+"""This module implements Deepgram transcription and filler word removal split point detection
+"""
 import os
 
 from deepgram import Deepgram
@@ -12,6 +14,7 @@ DEEPGRAM_TRANSCRIPTION_OPTIONS = {
 
 
 def transcribe(audio_path: str):
+    """Transcribes give audio file using Deepgram's Nova model"""
     deepgram_api_key = os.getenv("DEEPGRAM_API_KEY")
     if not deepgram_api_key:
         raise Exception("Deepgram API key is missing")
@@ -27,19 +30,15 @@ def transcribe(audio_path: str):
             )
         return res
     except Exception as e:
-        raise Exception("failed to transcribe with Deepgram", e)
+        raise Exception("failed to transcribe with Deepgram") from e
 
 
 def get_splits(result) -> timestamp.Timestamps:
+    """Retrieves split points with detected filler words removed"""
     filler_triggers = ["um", "uh", "mmhm", "mm-mm"]
     fillers = timestamp.Timestamps()
 
-    res = result["results"]
-    channels = res["channels"]
-    channel = channels[0]
-    alts = channel["alternatives"]
-    alt = alts[0]
-    words = alt["words"]
+    words = get_words(result)
     end_time = words[-1]["end"]
 
     try:
@@ -49,7 +48,7 @@ def get_splits(result) -> timestamp.Timestamps:
                 if filler in word:
                     fillers.add(text["start"], text["end"])
     except Exception as e:
-        raise Exception("failed to compile filler words", e)
+        raise Exception("failed to compile filler words") from e
 
     splits = timestamp.Timestamps()
     current_filler = fillers.head
@@ -67,3 +66,14 @@ def get_splits(result) -> timestamp.Timestamps:
 
     splits.add(fillers.tail.end, end_time)
     return splits
+
+
+def get_words(result):
+    """Retrieves list of words and their timestamps from Deepgram output"""
+    res = result["results"]
+    channels = res["channels"]
+    channel = channels[0]
+    alts = channel["alternatives"]
+    alt = alts[0]
+    words = alt["words"]
+    return words
