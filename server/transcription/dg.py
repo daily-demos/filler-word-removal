@@ -35,7 +35,7 @@ def transcribe(audio_path: str):
 
 def get_splits(result) -> timestamp.Timestamps:
     """Retrieves split points with detected filler words removed"""
-    filler_triggers = ["um", "uh", "mmhm", "mm-mm"]
+    filler_triggers = ["um", "uh", "eh", "mmhm", "mm-mm"]
     fillers = timestamp.Timestamps()
 
     words = get_words(result)
