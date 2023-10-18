@@ -9,6 +9,8 @@ This demo was tested with Python version 3.9. We recommend running this in a vir
 
 ### Set up your environment
 
+Ensure that you have [FFmpeg](https://ffmpeg.org/) installed on your machine.
+
 1. Clone this repository.
 1. Copy the `.env.sample` file into `.env`. DO NOT submit your `.env` file to version control.
 1. If you wish to use Deepgram instead of Whisper, paste your Deepgram API key into the `DEEPGRAM_API_KEY` environment variable in `.env`
