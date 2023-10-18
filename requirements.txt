@@ -1,7 +1,7 @@
 asgiref~=3.7.2
-autopep8 --in-place ~=2.0.4
+autopep8~=2.0.4
 deepgram-sdk~=2.11.0
-flask~=3.0.0
+quart~=0.19.3
 hypercorn~=0.14.4
 moviepy~=1.0.3
 python-dotenv~=1.0.0

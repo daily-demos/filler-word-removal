@@ -14,7 +14,16 @@ This demo was tested with Python version 3.9. We recommend running this in a vir
 1. If you wish to use Deepgram instead of Whisper, paste your Deepgram API key into the `DEEPGRAM_API_KEY` environment variable in `.env`
 1. If you wish to automatically retrieve Daily recordings for your domain instead of uploading an MP4 manually, paste your Daily API key into the `DAILY_API_KEY` environment variable in `.env`.
 
+### Create and activate a virtual environment
+
+In the root of the repository on your local machine, run the following commands:
+
+1. `python3 -m venv venv`
+1. `source venv/bin/activate`
+
 ### Run the application
+
+In the virtual environment, run the following: 
 
 1. Run `pip install -r requirements.txt` from the root directory of this repo on your local machine.
 1. Run `quart --app server/index.py --debug run` in your terminal.

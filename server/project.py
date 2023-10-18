@@ -40,8 +40,13 @@ class Project:
 
     def __init__(
             self,
-            transcriber=Transcribers.WHISPER,
+            transcriber=None,
     ):
+        if not transcriber:
+            transcriber = Transcribers.WHISPER
+            deepgram_api_key = os.getenv("DEEPGRAM_API_KEY")
+            if deepgram_api_key:
+                transcriber = Transcribers.DEEPGRAM
         self.transcriber = transcriber.value
         self.id = self.configure()
 
@@ -106,7 +111,7 @@ class Project:
         try:
             video.audio.write_audiofile(audio_path)
         except Exception as e:
-            raise Exception('failed to save extracted audio file') from e
+            raise Exception('failed to save extracted audio file', video_path, audio_path) from e
         return audio_path
 
     def transcribe(self, audio_path: str):

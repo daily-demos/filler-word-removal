@@ -98,7 +98,7 @@ function processDailyRecording(recordingID) {
     .then((data) => {
       const projectID = data.project_id;
       // Begin polling status
-      pollStatus(projectID, true);
+      pollStatus(projectID, recordingID);
     })
     .catch((e) => {
       console.error('Failed to process Daily recording:', e);
@@ -110,7 +110,7 @@ function processDailyRecording(recordingID) {
  * @param projectID
  * @param isRecording
  */
-function pollStatus(projectID, isRecording = false) {
+function pollStatus(projectID, recordingID = null) {
   setTimeout(() => {
     // Fetch status of the given project from the server
     fetch(`${apiURL}/projects/${projectID}`)
@@ -125,25 +125,28 @@ function pollStatus(projectID, isRecording = false) {
         const { info } = data;
 
         // Update status in the DOM
-        updateProjectStatus(projectID, status, info, isRecording);
+        updateProjectStatus(projectID, status, info, recordingID);
         switch (status) {
           case 'In progress':
-            pollStatus(projectID);
+            pollStatus(projectID, recordingID);
             break;
           case 'Succeeded':
             addDownloadLink(
               projectID,
               `${apiURL}/projects/${projectID}/download`,
+                recordingID,
             );
+            break;
+          case 'Failed':
             break;
           default:
             console.warn('unexpected status:', status);
-            pollStatus(projectID);
+            pollStatus(projectID, recordingID);
         }
       })
       .catch((err) => {
         console.error('failed to check project status: ', err);
-        pollStatus(projectID);
+        pollStatus(projectID, recordingID);
       });
   }, 2000);
 }

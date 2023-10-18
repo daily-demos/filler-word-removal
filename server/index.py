@@ -26,14 +26,17 @@ async def upload_file():
     Returns project ID"""
     files = await request.files
     file = files["file"]
-    file_name = file.filename
+    project = Project()
+    file_name = f'{project.id}.mp4'
     file_path = os.path.join(get_upload_dir_path(), file_name)
     try:
-        file.save(file_path)
+        await file.save(file_path)
+        if not os.path.exists(file_path):
+            raise Exception("uploaded file not saved", file_path)
     except Exception as e:
         return process_error('failed to save uploaded file', e)
 
-    return process(file_path, file_name)
+    return process(project, file_path, file_name)
 
 
 @app.route('/process_recording/<recording_id>', methods=['POST'])
@@ -47,7 +50,8 @@ async def process_recording(recording_id):
     except Exception as e:
         return process_error('failed to download Daily recording', e)
 
-    file_name = f'{recording_id}.mp4'
+    project = Project()
+    file_name = f'{project.id}.mp4'
     file_path = os.path.join(get_upload_dir_path(), file_name)
     try:
         with open(file_path, 'wb') as file:
@@ -55,16 +59,12 @@ async def process_recording(recording_id):
     except Exception as e:
         return process_error('failed to save Daily recording file', e)
 
-    return process(file_path, file_name)
+    return process(project, file_path, file_name)
 
 
-def process(file_path: str, file_name: str) -> tuple[quart.Response, int]:
+def process(project: Project, file_path: str, file_name: str) -> tuple[quart.Response, int]:
     """Runs filler-word-removal processing on given file."""
-    transcriber = Transcribers.WHISPER
-    deepgram_api_key = os.getenv("DEEPGRAM_API_KEY")
-    if deepgram_api_key:
-        transcriber = Transcribers.DEEPGRAM
-    project = Project(transcriber=transcriber)
+
     try:
         app.add_background_task(project.process, file_path)
 

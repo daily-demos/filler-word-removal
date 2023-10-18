@@ -40,11 +40,11 @@ export function addUploadedProject(id, name) {
  * @param timestamp
  * @param processFunc
  */
-export function addDailyRecording(id, roomName, timestamp, processFunc) {
+export function addDailyRecording(recordingID, roomName, timestamp, processFunc) {
   const recordingTable = getRecordingsTable();
 
   const row = recordingTable.insertRow(-1);
-  row.id = id;
+  row.id = recordingID;
 
   const timestampCell = row.insertCell(-1);
   timestampCell.innerText = timestamp;
@@ -65,7 +65,7 @@ export function addDailyRecording(id, roomName, timestamp, processFunc) {
   processBtn.innerText = 'Process';
   processBtn.onclick = () => {
     processBtn.disabled = true;
-    processFunc(id);
+    processFunc(recordingID);
     controlCell.innerText = '';
     controlCell.append(createSpinner());
   };
@@ -82,12 +82,12 @@ export function addDailyRecording(id, roomName, timestamp, processFunc) {
  * @param isDailyRecording
  */
 export function updateProjectStatus(
-  id,
+  projectID,
   status,
   info,
-  isDailyRecording = false,
+  recordingID,
 ) {
-  const row = getProjectRow(id, isDailyRecording);
+  const row = getProjectRow(projectID, recordingID);
 
   const statusCell = row.cells[projStatusCellIdx];
   statusCell.innerText = status;
@@ -96,8 +96,8 @@ export function updateProjectStatus(
   infoCell.innerText = info;
 }
 
-export function addDownloadLink(id, link) {
-  const project = getProjectRow(id);
+export function addDownloadLink(projectID, link, recordingID) {
+  const project = getProjectRow(projectID, recordingID);
   const dlCell = project.cells[projDownloadCellIdx];
   dlCell.innerText = '';
   const a = document.createElement('a');
@@ -108,7 +108,7 @@ export function addDownloadLink(id, link) {
 }
 
 function getUploadsTable() {
-  return document.getElementById('projectsTable');
+  return document.getElementById('uploads');
 }
 
 function getRecordingsTable() {
@@ -121,15 +121,17 @@ function getRecordingsTable() {
  * @param isDailyRecording
  * @returns {HTMLTableRowElement}
  */
-function getProjectRow(id, isDailyRecording) {
-  const ele = document.getElementById(id);
-  const rowIdx = ele.rowIndex;
-  let table;
-  if (!isDailyRecording) {
-    table = getUploadsTable();
-  } else {
+function getProjectRow(projectID, recordingID) {
+  let ele, table
+  if (recordingID) {
+    ele = document.getElementById(recordingID);
     table = getRecordingsTable();
+  } else {
+    ele = document.getElementById(projectID);
+    table = getUploadsTable();
   }
+
+  const rowIdx = ele.rowIndex;
   return table.rows[rowIdx];
 }
 
