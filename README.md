@@ -5,7 +5,7 @@ This demo enables developers to remove filler words like "um" and "ah" from thei
 
 ## Running the demo locally
 
-This demo was tested with Python version 3.9. We recommend running this in a virtual environment.
+This demo was tested with Python version 3.11.6. We recommend running this in a virtual environment.
 
 ### Set up your environment
 
