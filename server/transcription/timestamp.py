@@ -7,7 +7,7 @@ import dataclasses
 
 @dataclasses.dataclass
 class Timestamp:
-    """Class representig a single timestamp"""
+    """Class representing a single timestamp"""
     next: Timestamp = None
     prev: Timestamp = None
     start = 0

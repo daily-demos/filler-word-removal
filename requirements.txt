@@ -1,5 +1,5 @@
 asgiref~=3.7.2
-autopep8autopep8 --in-place ~=2.0.4
+autopep8 --in-place ~=2.0.4
 deepgram-sdk~=2.11.0
 flask~=3.0.0
 hypercorn~=0.14.4
