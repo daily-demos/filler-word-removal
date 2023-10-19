@@ -36,36 +36,31 @@ def transcribe(audio_path: str):
 def get_splits(result) -> timestamp.Timestamps:
     """Retrieves split points with detected filler words removed"""
     filler_triggers = ["um", "uh", "eh", "mmhm", "mm-mm"]
-    fillers = timestamp.Timestamps()
 
     words = get_words(result)
-    end_time = words[-1]["end"]
-
+    splits = timestamp.Timestamps()
     try:
         for text in words:
             word = text["word"]
-            for filler in filler_triggers:
-                if filler in word:
-                    fillers.add(text["start"], text["end"])
+            word_start = text["start"]
+            word_end = text["end"]
+            if word in filler_triggers:
+                # If non-filler tail already exists, set the end time to the start of this filler word
+                if splits.tail:
+                    splits.tail.end = word_start
+
+                # If previous non-filler's start time is not the same as the start time of this filler,
+                # add a new split.
+                if splits.tail.start != word_start:
+                    splits.add(word_end, -1)
+            # If this is not a filler word and there are no other words
+            # already registered, add the first split.
+            elif splits.count == 0:
+                splits.add(word_start, -1)
+        splits.tail.end = words[-1]["end"]
+        return splits
     except Exception as e:
         raise Exception("failed to compile filler words") from e
-
-    splits = timestamp.Timestamps()
-    current_filler = fillers.head
-    while current_filler:
-        start = 0
-        end = current_filler.start
-        if current_filler.prev is not None:
-            start = current_filler.prev.end
-
-        # Safeguard against empty or nonsensical splits
-        if end > 0 and start != end:
-            splits.add(start, end)
-
-        current_filler = current_filler.next
-
-    splits.add(fillers.tail.end, end_time)
-    return splits
 
 
 def get_words(result):

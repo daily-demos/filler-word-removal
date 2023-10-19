@@ -111,7 +111,8 @@ class Project:
         try:
             video.audio.write_audiofile(audio_path)
         except Exception as e:
-            raise Exception('failed to save extracted audio file', video_path, audio_path) from e
+            raise Exception('failed to save extracted audio file',
+                            video_path, audio_path) from e
         return audio_path
 
     def transcribe(self, audio_path: str):

@@ -39,23 +39,26 @@ def get_splits(transcription) -> timestamp.Timestamps:
     """Retrieves split points with detected filler words removed"""
     segments = transcription["segments"]
     splits = timestamp.Timestamps()
-    for segment in segments:
-        for word in segment["words"]:
-            text = word["text"]
-            word_start = word["start"]
-            word_end = word["end"]
-            if "[*]" in text:
-                # If non-filler tail already exist, set the end time to the start of this filler word
-                if splits.tail:
-                    splits.tail.end = word_start
+    try:
+        for segment in segments:
+            for word in segment["words"]:
+                text = word["text"]
+                word_start = word["start"]
+                word_end = word["end"]
+                if "[*]" in text:
+                    # If non-filler tail already exists, set the end time to the start of this filler word
+                    if splits.tail:
+                        splits.tail.end = word_start
 
-                # If previous non-filler's start time is not the same as the start time of this filler,
-                # add a new split.
-                if splits.tail.start != word_start:
-                    splits.add(word_end, -1)
-            # If this is not a filler word and there are no other words
-            # already registered, add the first split.
-            elif splits.count == 0:
-                splits.add(word_start, -1)
-    splits.tail.end = segments[-1]["end"]
-    return splits
+                    # If previous non-filler's start time is not the same as the start time of this filler,
+                    # add a new split.
+                    if splits.tail.start != word_start:
+                        splits.add(word_end, -1)
+                # If this is not a filler word and there are no other words
+                # already registered, add the first split.
+                elif splits.count == 0:
+                    splits.add(word_start, -1)
+        splits.tail.end = segments[-1]["end"]
+        return splits
+    except Exception as e:
+        raise Exception("failed to compile filler words") from e
