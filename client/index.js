@@ -134,7 +134,7 @@ function pollStatus(projectID, recordingID = null) {
             addDownloadLink(
               projectID,
               `${apiURL}/projects/${projectID}/download`,
-                recordingID,
+              recordingID,
             );
             break;
           case 'Failed':

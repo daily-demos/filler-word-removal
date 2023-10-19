@@ -40,7 +40,12 @@ export function addUploadedProject(id, name) {
  * @param timestamp
  * @param processFunc
  */
-export function addDailyRecording(recordingID, roomName, timestamp, processFunc) {
+export function addDailyRecording(
+  recordingID,
+  roomName,
+  timestamp,
+  processFunc,
+) {
   const recordingTable = getRecordingsTable();
 
   const row = recordingTable.insertRow(-1);
@@ -81,12 +86,7 @@ export function addDailyRecording(recordingID, roomName, timestamp, processFunc)
  * @param info
  * @param isDailyRecording
  */
-export function updateProjectStatus(
-  projectID,
-  status,
-  info,
-  recordingID,
-) {
+export function updateProjectStatus(projectID, status, info, recordingID) {
   const row = getProjectRow(projectID, recordingID);
 
   const statusCell = row.cells[projStatusCellIdx];
@@ -122,7 +122,8 @@ function getRecordingsTable() {
  * @returns {HTMLTableRowElement}
  */
 function getProjectRow(projectID, recordingID) {
-  let ele, table
+  let ele;
+  let table;
   if (recordingID) {
     ele = document.getElementById(recordingID);
     table = getRecordingsTable();
