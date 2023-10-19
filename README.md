@@ -1,7 +1,7 @@
 
 ## Filler word removal with AI
 
-This demo enables developers to remove filler words like "um" and "ah" from their videos. You can either upload an MP4 of your choice to process or automatically retrieve Daily recordings from your domain to work on.
+This demo enables developers to remove filler words like "um" and "ah", also known as disfluencies, from their videos. You can either upload an MP4 of your choice to process or automatically retrieve Daily recordings from your domain to work on.
 
 ## Running the demo locally
 
