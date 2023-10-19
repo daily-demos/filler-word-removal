@@ -64,7 +64,6 @@ async def process_recording(recording_id):
 
 def process(project: Project, file_path: str, file_name: str) -> tuple[quart.Response, int]:
     """Runs filler-word-removal processing on given file."""
-
     try:
         app.add_background_task(project.process, file_path)
 

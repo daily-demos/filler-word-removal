@@ -35,6 +35,8 @@ Now, open the localhost address shown in your terminal after the last step above
 
 ![Screenshot of filler word removal web app](screenshot.png)
 
+If uploading a file manually, make sure the file is under 16MB in size. You can configure this server-side limit if you wish, but we stuck with Quart's default for this demo. 
+
 ## How it works
 
 The demo consists of a small JavaScript client and a Python server, where the processing work is done.

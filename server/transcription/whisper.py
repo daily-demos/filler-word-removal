@@ -40,6 +40,7 @@ def get_splits(transcription) -> timestamp.Timestamps:
     fillers = timestamp.Timestamps()
     segments = transcription["segments"]
     end_time = segments[-1]["end"]
+
     for segment in segments:
         for word in segment["words"]:
             text = word["text"]
