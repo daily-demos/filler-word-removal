@@ -60,7 +60,7 @@ def get_splits(result) -> timestamp.Timestamps:
         splits.tail.end = words[-1]["end"]
         return splits
     except Exception as e:
-        raise Exception("failed to compile filler words") from e
+        raise Exception("failed to split at filler words") from e
 
 
 def get_words(result):

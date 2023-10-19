@@ -61,4 +61,4 @@ def get_splits(transcription) -> timestamp.Timestamps:
         splits.tail.end = segments[-1]["end"]
         return splits
     except Exception as e:
-        raise Exception("failed to compile filler words") from e
+        raise Exception("failed to split at filler words") from e
