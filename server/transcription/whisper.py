@@ -39,6 +39,7 @@ def get_splits(transcription) -> timestamp.Timestamps:
     """Retrieves split points with detected filler words removed"""
     segments = transcription["segments"]
     splits = timestamp.Timestamps()
+    first_split_start = 0
     try:
         for segment in segments:
             for word in segment["words"]:
@@ -49,6 +50,10 @@ def get_splits(transcription) -> timestamp.Timestamps:
                     # If non-filler tail already exists, set the end time to the start of this filler word
                     if splits.tail:
                         splits.tail.end = word_start
+                    else:
+                        # If this is the very first word, be sure to start
+                        # the first split _after_ this one ends.
+                        first_split_start = word_end
 
                     # If previous non-filler's start time is not the same as the start time of this filler,
                     # add a new split.
@@ -57,7 +62,7 @@ def get_splits(transcription) -> timestamp.Timestamps:
                 # If this is not a filler word and there are no other words
                 # already registered, add the first split.
                 elif splits.count == 0:
-                    splits.add(word_start, -1)
+                    splits.add(first_split_start, -1)
         splits.tail.end = segments[-1]["end"]
         return splits
     except Exception as e:

@@ -35,7 +35,7 @@ export function addUploadedProject(id, name) {
 
 /**
  * Add a recording to the Recordings table
- * @param id
+ * @param recordingID
  * @param roomName
  * @param timestamp
  * @param processFunc
@@ -46,6 +46,10 @@ export function addDailyRecording(
   timestamp,
   processFunc,
 ) {
+  // Do not re-add if recording row already exists
+  const existingRow = getProjectRow(null, recordingID)
+  if (existingRow) return;
+
   const recordingTable = getRecordingsTable();
 
   const row = recordingTable.insertRow(-1);
@@ -132,7 +136,8 @@ function getProjectRow(projectID, recordingID) {
     table = getUploadsTable();
   }
 
-  const rowIdx = ele.rowIndex;
+  const rowIdx = ele?.rowIndex;
+  if (!rowIdx) return null;
   return table.rows[rowIdx];
 }
 
