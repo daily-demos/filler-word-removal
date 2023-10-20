@@ -18,11 +18,10 @@ def transcribe(audio_path: str):
     deepgram_api_key = os.getenv("DEEPGRAM_API_KEY")
     if not deepgram_api_key:
         raise Exception("Deepgram API key is missing")
-
+    if not os.path.exists(audio_path):
+        raise Exception("Audio file could not be found", audio_path)
     try:
         deepgram = Deepgram(deepgram_api_key)
-        if not os.path.exists(audio_path):
-            raise Exception("Audio file could not be found", audio_path)
         with open(audio_path, 'rb') as audio_file:
             source = {'buffer': audio_file, 'mimetype': "audio/wav"}
             res = deepgram.transcription.sync_prerecorded(
