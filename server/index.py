@@ -5,7 +5,7 @@ import sys
 import traceback
 
 from daily import fetch_recordings, get_access_link
-from project import Project, Transcribers
+from project import Project
 from quart_cors import cors
 
 import quart
@@ -115,6 +115,10 @@ def process_error(msg: str, error: Exception) -> tuple[quart.Response, int]:
     response = {'error': msg}
     return jsonify(response), 500
 
+@app.after_serving
+async def shutdown():
+    for task in app.background_tasks:
+        task.cancel()
 
 if __name__ == '__main__':
     app.run(debug=True)
