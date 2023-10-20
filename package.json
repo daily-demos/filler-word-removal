@@ -1,0 +1,19 @@
+{
+  "name": "filler-removal-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint './**/*.js'",
+    "lintFix": "eslint './**/*.js' --fix"
+  },
+  "author": "Liza Shulyayeva",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^5.0.0"
+  }
+}

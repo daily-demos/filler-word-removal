@@ -1,0 +1,8 @@
+venv
+.env
+.idea
+/.git/
+/OUTPUT_DIR/
+/UPLOAD_DIR/
+/TEMP_DIR/
+/node_modules/

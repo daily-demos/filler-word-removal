@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI-powered filler word removal</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+    <link href="./css/header.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <div class="left-header">
+            <img
+                    src="./assets/daily.svg"
+                    class="daily-logo"
+                    alt="Daily logo reads Daily"
+            />
+            <strong>
+                <p class="header-title">AI-powered filler word removal</p>
+            </strong>
+        </div>
+        <div class="right-header">
+            <a
+                    href="https://docs.daily.co/reference"
+                    target="_blank"
+                    class="link"
+            >
+                <button class="button docs-button white-button">
+                    API docs
+                    <img
+                            class="arrow-icon"
+                            src="./assets/new-tab-icon.png"
+                            alt="Arrow icon points up and to the right"
+                            aria-hidden="true"
+                    />
+                </button>
+            </a>
+            <span class="divider"></span>
+            <a
+                    href="https://github.com/daily-demos/filler-word-removal"
+                    target="_blank"
+            >
+                <img
+                        class="octocat"
+                        src="./assets/github.png"
+                        alt="GitHub logo Octocat"
+                />
+            </a>
+        </div>
+    </div>
+</header>
+<noscript>
+    This application requires JavaScript to run. Please enable JavaScript in
+    your browser.
+</noscript>
+<div id="container">
+    <div id="lobby" class="lobby">
+        <h1>AI-powered filler word removal</h1>
+        <h2>Remove filler words like "um" and "uh", also known as disfluencies, from any MP4 file.</h2>
+        <p>This demo implements filler word removal functionality with a local Whisper model or, alternatively,
+            Deepgram's <em>Nova</em>-tier model.</p>
+
+        <div id="manual">
+            <h3>Manual file upload</h3>
+            <p>Start by selecting an MP4 file below and clicking "Upload".</p>
+            <form id="uploadForm">
+                <h4>Upload your MP4 file</h4>
+                <input type="file" id="videoFile" class="light-btn" required>
+                <button type="submit" id="upload" class="teal-btn">Upload</button>
+            </form>
+            <table id="uploads" class="hidden">
+                <th>Name</th>
+                <th>Project ID</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th>Download</th>
+            </table>
+        </div>
+        <div id="recordings">
+            <h2>Fetch Daily recordings automatically</h2>
+            <p>If you've configured a Daily API key on your server component, you can automatically fetch Daily recordings
+            for your domain and process them without uploading a file manually.</p>
+            <button id="fetchRecordings" class="teal-btn">Fetch Daily recordings</button>
+            <table id="dailyRecordings" class="hidden">
+                <th>Timestamp</th>
+                <th>Room name</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th></th>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="module" src="./index.js"></script>
+</body>
+</html>

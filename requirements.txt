@@ -1,0 +1,11 @@
+asgiref~=3.7.2
+autopep8~=2.0.4
+deepgram-sdk~=2.11.0
+quart~=0.19.3
+hypercorn~=0.14.4
+moviepy~=1.0.3
+python-dotenv~=1.0.0
+pylint~=3.0.1
+quart_cors~=0.7.0
+transformers~=4.34.0
+whisper_timestamped @ git+https://github.com/linto-ai/whisper-timestamped@127e8b738756420487210490d09938593244b3dd
