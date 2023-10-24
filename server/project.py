@@ -135,8 +135,8 @@ class Project:
                 start = current_split.start
                 end = current_split.end
 
-                # Overarching safeguard against 0-duration splits
-                if start == end:
+                # Overarching safeguard against 0-duration and nonsensical splits
+                if start >= end:
                     current_split = current_split.next
                     continue
                 clip_file_path = os.path.join(tmp, f"{str(idx)}.mp4")
