@@ -162,7 +162,7 @@ class Project:
             raise Exception('failed to reconcatenate clips') from e
 
         # Remove temp directory for this project
-    #   shutil.rmtree(tmp)
+        shutil.rmtree(tmp)
 
     def update_status(self, status: Status, info: str):
         """Updates the project's status file"""
